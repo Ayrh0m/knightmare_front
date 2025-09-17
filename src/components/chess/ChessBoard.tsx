@@ -4,8 +4,10 @@ import { useGame } from "@/context/ChessContext";
 import { Chess, Color, Move, PieceSymbol, Square } from "chess.js";
 import { useEffect, useRef, useState } from "react";
 import Piece from "./Piece";
+import ChessHistory from "./ChessHistory";
 
 const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
+const promotions = ["q", "r", "b", "n"] as PieceSymbol[];
 
 export default function ChessBoard() {
   const {
@@ -22,9 +24,7 @@ export default function ChessBoard() {
   const [selectedSquare, setSelectedSquare] = useState<Square | null>(null);
   const [legalMoves, setLegalMoves] = useState<Square[]>([]);
   const [showPromotion, setShowPromotion] = useState<boolean>(false);
-  const [promotionChoice, setPromotionChoice] = useState<PieceSymbol | null>(
-    null
-  );
+  const [lastMove, setLastMove] = useState<Square | null>(null);
   const [pendingMove, setPendingMove] = useState<{
     from: Square;
     to: Square;
@@ -82,6 +82,7 @@ export default function ChessBoard() {
         setSelectedSquare(null);
         setLegalMoves([]);
       }
+      if (move) setLastMove(move.to);
       return move;
     }
   }
@@ -101,51 +102,57 @@ export default function ChessBoard() {
   }
 
   const board = displayGame.board();
-  const promotions = ["q", "r", "b", "n"] as PieceSymbol[];
 
   return (
-    <div className={`board ${!canPlay ? "static" : ""}`}>
-      {showPromotion && (
-        <div className="promotion-container">
-          {promotions.map((p) => (
-            <img
-              key={p}
-              src={`/pieces/${fileStart}_${p}.svg`}
-              alt={`${p} promotion`}
-              className="promotion-choice"
-              onClick={() => handlePromotion(p)}
-            />
-          ))}
-        </div>
-      )}
-      {board.map((row, i) =>
-        row.map((square, j) => {
-          const isLight = (i + j) % 2 === 0;
-          const file = files[j];
-          const rank = 8 - i;
-          const squareName = `${file}${rank}`;
-          return (
-            <div
-              key={squareName}
-              className={`square ${isLight ? "light" : "dark"} ${
-                square?.square === selectedSquare ? "selected" : ""
-              }`}
-              onClick={() => handleClick(squareName as Square, square?.color)}
-            >
-              {j === 0 && (
-                <span className={`rank ${isLight ? "dark" : ""}`}>{rank}</span>
-              )}
-              {i === 7 && (
-                <span className={`file ${isLight ? "dark" : ""}`}>{file}</span>
-              )}
-              {square && <Piece type={square.type} color={square.color} />}
-              {legalMoves.includes(squareName as Square) && !square && (
-                <span className="legal"></span>
-              )}
-            </div>
-          );
-        })
-      )}
+    <div className="chess">
+      <div className={`board ${!canPlay ? "static" : ""}`}>
+        {showPromotion && (
+          <div className="promotion-container">
+            {promotions.map((p) => (
+              <img
+                key={p}
+                src={`/pieces/${fileStart}_${p}.svg`}
+                alt={`${p} promotion`}
+                className="promotion-choice"
+                onClick={() => handlePromotion(p)}
+              />
+            ))}
+          </div>
+        )}
+        {board.map((row, i) =>
+          row.map((square, j) => {
+            const isLight = (i + j) % 2 === 0;
+            const file = files[j];
+            const rank = 8 - i;
+            const squareName = `${file}${rank}`;
+            return (
+              <div
+                key={squareName}
+                className={`square ${isLight ? "light" : "dark"} ${
+                  square?.square === selectedSquare ? "selected" : ""
+                } ${square?.square === lastMove ? "last" : ""}`}
+                onClick={() => handleClick(squareName as Square, square?.color)}
+              >
+                {j === 0 && (
+                  <span className={`rank ${isLight ? "dark" : ""}`}>
+                    {rank}
+                  </span>
+                )}
+                {i === 7 && (
+                  <span className={`file ${isLight ? "dark" : ""}`}>
+                    {file}
+                  </span>
+                )}
+                {square && <Piece type={square.type} color={square.color} />}
+                {legalMoves.includes(squareName as Square) && !square && (
+                  <span className="legal"></span>
+                )}
+              </div>
+            );
+          })
+        )}
+      </div>
+      <ChessHistory />
     </div>
   );
 }

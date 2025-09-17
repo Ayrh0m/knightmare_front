@@ -56,6 +56,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     const newGame = new Chess();
     setTurn(newGame.turn());
     setFenHistory([newGame.fen()]);
+    setHistory([]);
     setGame(newGame);
     setCurrentIndex(0);
   }
