@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Chess, Color, Move, PieceSymbol, Square } from "chess.js";
 
 type GameContextType = {
@@ -17,6 +17,7 @@ type GameContextType = {
   ) => Move | null;
   resetGame: () => void;
   goTo: (index: number) => boolean;
+  isPromotionMove: (from: Square, to: Square, piece: PieceSymbol) => boolean
 };
 
 const GameContext = createContext<GameContextType | null>(null);
@@ -29,6 +30,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   );
   const [fenHistory, setFenHistory] = useState<string[]>([game.fen()]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+
   const lastIndex = game.history().length;
   const canPlay = currentIndex === lastIndex;
 
@@ -39,6 +41,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   ) {
     try {
       const move = game.move({ from, to, promotion });
+
       setTurn(game.turn());
       setHistory(game.history({ verbose: true }));
       setFenHistory((prev) => [...prev.slice(0, currentIndex + 1), game.fen()]);
@@ -65,6 +68,13 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     return false;
   }
 
+  function isPromotionMove(from: Square, to: Square, piece: PieceSymbol)
+  {
+    if (piece !== 'p') return false;
+    const rank = to[1];
+    return (rank === '8' || rank === '1');
+  }
+
   return (
     <GameContext.Provider
       value={{
@@ -78,6 +88,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         makeMove,
         resetGame,
         goTo,
+        isPromotionMove
       }}
     >
       {children}
