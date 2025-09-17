@@ -1,9 +1,9 @@
+import { GameProvider } from "@/context/ChessContext";
 import type { Metadata } from "next";
-import "./globals.css";
+import '../chess.css';
 
 export const metadata: Metadata = {
-  title: "Knightmare",
-  description: "Chess player",
+  title: "Knightmare - Play",
 };
 
 export default function RootLayout({
@@ -11,11 +11,5 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body>
-        {children}
-      </body>
-    </html>
-  );
+  return <GameProvider>{children}</GameProvider>;
 }

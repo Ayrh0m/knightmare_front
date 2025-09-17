@@ -1,0 +1,86 @@
+.board {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    width: calc(88px*8);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+.board.static::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--light);
+    opacity: .2;
+}
+
+.square {
+    width: 88px;
+    aspect-ratio: 1/1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.square.light {
+    background-color: var(--light);
+}
+
+.square.dark {
+    background-color: var(--primary);
+}
+
+.square.selected::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .2);
+}
+
+.square .legal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--dark);
+    width: calc(88px / 4);
+    aspect-ratio: 1/1;
+    border-radius: 50px;
+    opacity: .3;
+}
+
+.rank,
+.file {
+    position: absolute;
+    display: block;
+    color: var(--light);
+    font-size: 1rem;
+    margin: 2px 4px;
+}
+
+.rank {
+    top: 0;
+    left: 0;
+}
+
+.file {
+    bottom: 0;
+    right: 0;
+}
+
+.rank.dark,
+.file.dark {
+    color: var(--primary);
+}
+
+.piece {
+    width: 100%;
+}
