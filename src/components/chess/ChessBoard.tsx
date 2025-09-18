@@ -5,6 +5,7 @@ import { Chess, Color, Move, PieceSymbol, Square } from "chess.js";
 import { useEffect, useRef, useState } from "react";
 import Piece from "./Piece";
 import ChessHistory from "./ChessHistory";
+import ChessReset from "./ChessReset";
 
 const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
 const promotions = ["q", "r", "b", "n"] as PieceSymbol[];
@@ -17,6 +18,7 @@ export default function ChessBoard() {
     currentIndex,
     canPlay,
     fenHistory,
+    resetGame,
     goTo,
     isPromotionMove,
   } = useGame();
@@ -33,6 +35,10 @@ export default function ChessBoard() {
 
   useEffect(() => {
     setSelectedSquare(null);
+    setLegalMoves([]);
+    setLastMove(null);
+    setPendingMove(null);
+    setShowPromotion(false);
   }, [displayGame]);
 
   useEffect(() => {
@@ -152,7 +158,10 @@ export default function ChessBoard() {
           })
         )}
       </div>
-      <ChessHistory />
+      <section className="right-panel">
+        <ChessHistory />
+        <ChessReset />
+      </section>
     </div>
   );
 }

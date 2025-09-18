@@ -1,4 +1,3 @@
-
 .chess {
     display: flex;
     align-items: center;
@@ -127,19 +126,145 @@
     user-select: none;
 }
 
+/* Panel */
+
+.right-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
 /* History */
 
 .history-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--light);
+    height: 50dvh;
+}
+
+.history-header {
+    display: flex;
+    margin-left: 2rem;
+    padding: .25rem .5rem;
+    gap: 1rem;
+}
+
+.history-header span {
+    width: 80px;
+}
+
+.history-row {
+    display: flex;
+    background-color: rgba(255, 255, 255, .1);
+}
+
+.history-row:nth-child(even) {
+    background-color: rgba(255, 255, 255, .2);
+}
+
+.history-move-number {
+    width: 1.5rem;
+    font-size: 1rem;
+    padding: .25rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid var(--light);
 }
 
 .history-move {
+    width: 80px;
+    display: flex;
+    align-items: center;
+    padding: .25rem .5rem;
+    width: 100%;
+}
+
+.history-move.current {
+    background-color: var(--light);
+}
+
+.history-move.current span {
+    color: var(--dark);
+}
+
+.history-move span {
     color: var(--light);
-    font-size: 1.2rem;
+    display: inline-block;
+    font-size: 1rem;
     background-color: transparent;
-    width: calc(88px * 2);
-    height: 88px;
-    border: 1px solid var(--light);
     cursor: pointer;
+    padding: .25rem;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.history-move img {
+    width: 1.5rem;
+}
+
+/* Reset game */
+
+.reset-container {
+    position: relative;
+}
+
+.reset-container .btn {
+    width: 100%;
+}
+
+.reset-confirmation-container {
+    position: absolute;
+    width: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 110%;
+    background-color: var(--light);
+    color: var(--dark);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .5rem;
+    padding: 1rem;
+    border-radius: 4px;
+}
+
+.reset-choices {
+    display: flex;
+    gap: .5rem;
+}
+
+.reset-choices button {
+    display: block;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 64px;
+}
+
+.reset-yes {
+    background-color: var(--primary);
+    color: var(--light);
+    border: none;
+}
+
+.reset-choices button:hover {
+    transform: scale(1.02);
+}
+
+.reset-no {
+    color: var(--dark);
+    background: transparent;
+    border: 1px solid var(--dark);
+}
+
+.btn.disabled {
+    opacity: .5;
+}
+
+.btn.disabled:hover {
+    transform: none;
 }

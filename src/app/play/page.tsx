@@ -8,7 +8,6 @@ export default function Play() {
   return (
     <main className={styles.playContainer}>
       <ChessBoard />
-      <button onClick={resetGame}>Reset</button>
     </main>
   );
 }

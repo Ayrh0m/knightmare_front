@@ -53,6 +53,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   }
 
   function resetGame() {
+    if (game.history().length === 0) return;
     const newGame = new Chess();
     setTurn(newGame.turn());
     setFenHistory([newGame.fen()]);
