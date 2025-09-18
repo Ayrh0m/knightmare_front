@@ -3,7 +3,7 @@ import { useGame } from "@/context/ChessContext";
 import { useEffect, useState } from "react";
 
 export default function ChessReset() {
-  const { resetGame } = useGame();
+  const { resetGame, lastIndex } = useGame();
   const [resetPending, setResetPending] = useState<boolean>(false);
 
   useEffect(() => {
@@ -30,8 +30,9 @@ export default function ChessReset() {
   return (
     <div className="reset-container">
       <button
-        className={`btn ${resetPending && "disabled"}`}
+        className={`btn btn-primary ${(resetPending || lastIndex === 0) && "disabled"}`}
         onClick={handleReset}
+        disabled={lastIndex === 0}
       >
         Nouvelle Partie
       </button>

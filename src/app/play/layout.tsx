@@ -1,6 +1,6 @@
-import { GameProvider } from "@/context/ChessContext";
 import type { Metadata } from "next";
-import '../chess.css';
+import "../chess.css";
+import { GameProvider } from "@/context/ChessContext";
 
 export const metadata: Metadata = {
   title: "Knightmare - Play",

@@ -14,7 +14,8 @@
 html,
 body {
   max-width: 100dvw;
-  overflow-x: hidden;
+  max-height: 100dvh;
+  overflow: hidden;
   font-size: 16px;
 }
 
@@ -40,15 +41,21 @@ a {
 /* Général */
 
 .btn {
+  display: block;
   padding: .5rem 2rem;
-  background-color: var(--secondary);
-  color: var(--dark);
-  border-radius: 2px;
+  border-radius: 4px;
   cursor: pointer;
   border: none;
   transition: transform .1s ease-out;
+  color: var(--light);
+  border: 1px solid var(--light);
 }
 
 .btn:hover {
   transform: scale(1.02);
+}
+
+.btn-primary {
+  background-color: var(--secondary);
+  color: var(--dark);
 }

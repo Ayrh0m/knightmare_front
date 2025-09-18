@@ -1,5 +1,9 @@
 "use client";
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+} from "react";
 import { Chess, Color, Move, PieceSymbol, Square } from "chess.js";
 
 type GameContextType = {
@@ -10,6 +14,7 @@ type GameContextType = {
   currentIndex: number;
   lastIndex: number;
   canPlay: boolean;
+  checkmate: Color | null;
   makeMove: (
     from: Square,
     to: Square,
@@ -17,7 +22,7 @@ type GameContextType = {
   ) => Move | null;
   resetGame: () => void;
   goTo: (index: number) => boolean;
-  isPromotionMove: (from: Square, to: Square, piece: PieceSymbol) => boolean
+  isPromotionMove: (from: Square, to: Square, piece: PieceSymbol) => boolean;
 };
 
 const GameContext = createContext<GameContextType | null>(null);
@@ -30,6 +35,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   );
   const [fenHistory, setFenHistory] = useState<string[]>([game.fen()]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [isCheckmate, setIsCheckmate] = useState<boolean>(game.isCheckmate());
+  const [checkmate, setCheckmate] = useState<Color | null>(game.isCheckmate() ? game.turn() : null)
 
   const lastIndex = game.history().length;
   const canPlay = currentIndex === lastIndex;
@@ -41,6 +48,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   ) {
     try {
       const move = game.move({ from, to, promotion });
+
+      if (game.isCheckmate()) setCheckmate(game.turn());
 
       setTurn(game.turn());
       setHistory(game.history({ verbose: true }));
@@ -70,11 +79,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     return false;
   }
 
-  function isPromotionMove(from: Square, to: Square, piece: PieceSymbol)
-  {
-    if (piece !== 'p') return false;
+  function isPromotionMove(from: Square, to: Square, piece: PieceSymbol) {
+    if (piece !== "p") return false;
     const rank = to[1];
-    return (rank === '8' || rank === '1');
+    return rank === "8" || rank === "1";
   }
 
   return (
@@ -87,10 +95,11 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         currentIndex,
         lastIndex,
         canPlay,
+        checkmate,
         makeMove,
         resetGame,
         goTo,
-        isPromotionMove
+        isPromotionMove,
       }}
     >
       {children}

@@ -1,7 +1,44 @@
 .main {
   display: flex;
   flex-direction: column;
+  margin-top: 380px;
+  align-items: center;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.homeHeader {
+  color: var(--light);
+}
+
+.homeHeader h1 {
+  font-size: 6rem;
+  text-decoration: underline;
+}
+
+.homeHeader p {
+  font-size: 2rem;
+  text-align: center;
+  margin-top: -.5rem;
+}
+
+.homeButtons {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100dvh;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.chessImg {
+  width: 950px;
+  position: absolute;
+  bottom: -400px;
+  left: 50%;
+  transform: translateX(-50%);
+  filter: blur(10px);
+  mix-blend-mode:luminosity;
+  z-index: -1;
+  opacity: .6;
 }
