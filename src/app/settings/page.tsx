@@ -4,25 +4,19 @@ import styles from "./page.module.css";
 import Link from "next/link";
 
 export default function Settings() {
-  const [showMoveHelp, setShowMoveHelp] = useState<string | null>(
-    localStorage.getItem("show-move-help")
-  );
+  const [showMoveHelp, setShowMoveHelp] = useState<string | null>(null);
 
   useEffect(() => {
-    if (
-      showMoveHelp === "true" &&
-      localStorage.getItem("show-move-help") !== "true"
-    )
-      localStorage.setItem("show-move-help", "true");
-    else if (
-      showMoveHelp === "false" &&
-      localStorage.getItem("show-move-help") !== "false"
-    )
-      localStorage.setItem("show-move-help", "false");
-    else if (!showMoveHelp) {
+    const stored = localStorage.getItem("show-move-help");
+    if (stored) setShowMoveHelp(stored);
+    else {
       localStorage.setItem("show-move-help", "true");
       setShowMoveHelp("true");
     }
+  }, []);
+
+  useEffect(() => {
+    if (showMoveHelp) localStorage.setItem("show-move-help", showMoveHelp);
   }, [showMoveHelp]);
 
   return (

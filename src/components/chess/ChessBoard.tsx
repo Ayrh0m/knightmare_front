@@ -34,6 +34,12 @@ export default function ChessBoard() {
     to: Square;
   } | null>(null);
   const [fileStart, setFileStart] = useState<Color>(turn);
+  const [showMoveHelp, setShowMoveHelp] = useState<boolean>(false)
+
+  useEffect(() => {
+    const stored = localStorage.getItem("show-move-help");
+    setShowMoveHelp(stored === "true");
+  }, []);
 
   useEffect(() => {
     setSelectedSquare(null);
@@ -105,11 +111,10 @@ export default function ChessBoard() {
   function selectSquare(square: Square) {
     setSelectedSquare(square);
     const moves = displayGame.moves({ square: square, verbose: true });
-    showMoveHelp && setLegalMoves(moves.map((m) => m.to));
+    if (showMoveHelp) setLegalMoves(moves.map((m) => m.to));
   }
 
   const board = displayGame.board();
-  const showMoveHelp = localStorage.getItem("show-move-help") === "true";
   return (
     <>
       <div className="chess">
