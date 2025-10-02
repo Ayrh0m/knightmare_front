@@ -1,8 +1,8 @@
 import Link from "next/link";
 import styles from "./page.module.css";
+import Image from "next/image";
 
 export default function Home() {
-
   return (
     <main className={styles.main}>
       <div className={styles.homeHeader}>
@@ -19,7 +19,7 @@ export default function Home() {
           Paramètres
         </Link>
       </div>
-      <img src="/chess_fond.png" alt="" className={styles.chessImg} />
+      <Image src="/chess_fond.png" alt="" className={styles.chessImg} />
     </main>
   );
 }

@@ -22,7 +22,7 @@ export default function ChessTimer({ initialValue, side }: ChessTimerProps) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [turn]);
+  }, [turn, side]);
 
   const formatTime = (ms: number) => {
     const totalSeconds = Math.floor(ms / 1000);

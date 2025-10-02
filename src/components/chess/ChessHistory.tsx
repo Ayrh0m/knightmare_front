@@ -1,5 +1,6 @@
 "use client";
 import { useGame } from "@/context/ChessContext";
+import Image from "next/image";
 
 export default function ChessHistory() {
   const { history, currentIndex, goTo } = useGame();
@@ -31,7 +32,7 @@ export default function ChessHistory() {
                 onClick={() => goTo(rowIndex * 2 + 1)}
               >
                 {whitePiece && (
-                  <img src={whitePiece} alt={`${whiteMove.san} img`} />
+                  <Image src={whitePiece} alt={`${whiteMove.san} img`} />
                 )}
                 <span>{whiteMove ? whiteMove.san : ""}</span>
               </div>
@@ -42,7 +43,7 @@ export default function ChessHistory() {
                 onClick={() => goTo(rowIndex * 2 + 2)}
               >
                 {blackPiece && (
-                  <img src={blackPiece} alt={`${blackMove.san} img`} />
+                  <Image src={blackPiece} alt={`${blackMove.san} img`} />
                 )}
                 <span>{blackMove ? blackMove.san : ""}</span>
               </div>

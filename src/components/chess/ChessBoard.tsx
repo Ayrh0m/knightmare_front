@@ -1,13 +1,12 @@
 "use client";
 
-import { GameProvider, useGame } from "@/context/ChessContext";
+import { useGame } from "@/context/ChessContext";
 import { Chess, Color, Move, PieceSymbol, Square } from "chess.js";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Piece from "./Piece";
 import ChessHistory from "./ChessHistory";
 import ChessReset from "./ChessReset";
-import ChessTimer from "./ChessTimer";
-import { TimerProvider } from "@/context/TimerContext";
+import Image from "next/image";
 
 const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
 const promotions = ["q", "r", "b", "n"] as PieceSymbol[];
@@ -21,6 +20,7 @@ export default function ChessBoard() {
     canPlay,
     fenHistory,
     checkmate,
+    lastIndex,
     goTo,
     isPromotionMove,
   } = useGame();
@@ -49,7 +49,7 @@ export default function ChessBoard() {
   useEffect(() => {
     if (!showPromotion) return;
     setFileStart(turn);
-  }, [showPromotion]);
+  }, [showPromotion, turn]);
 
   useEffect(() => {
     const arrowPressed = (e: KeyboardEvent) => {
@@ -117,7 +117,7 @@ export default function ChessBoard() {
           {showPromotion && (
             <div className="promotion-container">
               {promotions.map((p) => (
-                <img
+                <Image
                   key={p}
                   src={`/pieces/${fileStart}_${p}.svg`}
                   alt={`${p} promotion`}
@@ -139,9 +139,9 @@ export default function ChessBoard() {
                   className={`square ${isLight ? "light" : "dark"} ${
                     square?.square === selectedSquare ? "selected" : ""
                   } ${square?.square === lastMove ? "last" : ""} ${
-                    checkmate &&
                     square?.type === "k" &&
-                    square.color === checkmate
+                    square.color === checkmate &&
+                    currentIndex === lastIndex
                       ? "checkmate"
                       : ""
                   }`}

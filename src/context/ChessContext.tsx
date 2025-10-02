@@ -35,7 +35,6 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   );
   const [fenHistory, setFenHistory] = useState<string[]>([game.fen()]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [isCheckmate, setIsCheckmate] = useState<boolean>(game.isCheckmate());
   const [checkmate, setCheckmate] = useState<Color | null>(game.isCheckmate() ? game.turn() : null)
 
   const lastIndex = game.history().length;
@@ -57,6 +56,7 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
       setCurrentIndex((prev) => prev + 1);
       return move;
     } catch (err) {
+      console.error(err);
       return null;
     }
   }

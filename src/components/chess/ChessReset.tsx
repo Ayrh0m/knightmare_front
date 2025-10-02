@@ -20,7 +20,7 @@ export default function ChessReset() {
     return () => {
       window.removeEventListener("keydown", enterPressed);
     };
-  }, [resetPending]);
+  }, [resetPending, resetGame]);
 
   function handleReset() {
     if (!resetPending) return setResetPending(true);

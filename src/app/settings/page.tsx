@@ -34,7 +34,7 @@ export default function Settings() {
       <div className={styles.settingsContainer}>
         <div className={styles.settingContainer}>
           <span className={styles.settingName}>
-            Afficher l'aide des coups légaux
+            Afficher l&apos;aide des coups légaux
           </span>
           <div className={styles.settingChoices}>
             <span
@@ -58,7 +58,7 @@ export default function Settings() {
       </div>
       <div className={styles.settingsButtons}>
         <Link href={"/"} className="btn">
-          Revenir à l'accueil
+          Revenir à l&apos;accueil
         </Link>
       </div>
     </main>
