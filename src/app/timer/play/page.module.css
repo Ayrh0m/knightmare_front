@@ -1,0 +1,23 @@
+.playContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100dvw;
+    height: 100dvh;
+}
+
+.btnHome {
+    margin-top: 2rem;
+}
+
+.timersSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.timersSection .timers-container {
+    width: 200px;
+}
+

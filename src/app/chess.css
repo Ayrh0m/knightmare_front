@@ -109,8 +109,6 @@
     background-color: rgb(201, 37, 37);
 }
 
-/* Promotion */
-
 .promotion-container {
     position: absolute;
     top: 50%;
@@ -130,8 +128,6 @@
     user-select: none;
 }
 
-/* Panel */
-
 .right-panel {
     display: flex;
     flex-direction: column;
@@ -139,13 +135,12 @@
     gap: 1rem;
 }
 
-/* History */
-
 .history-container {
     display: flex;
     flex-direction: column;
     border: 1px solid var(--light);
     height: 50dvh;
+    overflow: hidden;
 }
 
 .history-header {
@@ -153,6 +148,14 @@
     margin-left: 2rem;
     padding: .25rem .5rem;
     gap: 1rem;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--light);
+}
+
+.history-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .history-header span {
@@ -208,8 +211,6 @@
 .history-move img {
     width: 1.5rem;
 }
-
-/* Reset game */
 
 .reset-container {
     position: relative;
@@ -271,4 +272,59 @@
 
 .btn.disabled:hover {
     transform: none;
+}
+
+.timer-display {
+    padding: 1rem;
+    border: 1px solid var(--light);
+    border-radius: 4px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, .05);
+    transition: all 0.3s ease;
+}
+
+.timer-display.active {
+    background-color: rgba(255, 255, 255, .15);
+    border-color: var(--secondary);
+    box-shadow: 0 0 10px rgba(232, 223, 202, 0.3);
+}
+
+.timer-display.low-time {
+    background-color: rgba(201, 37, 37, .2);
+    border-color: rgb(201, 37, 37);
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.timer-label {
+    font-size: 0.875rem;
+    color: var(--light);
+    opacity: 0.8;
+    margin-bottom: 0.5rem;
+}
+
+.timer-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--light);
+    font-variant-numeric: tabular-nums;
+}
+
+.timer-display.low-time .timer-value {
+    color: rgb(201, 37, 37);
+}
+
+.timers-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem;
 }

@@ -6,6 +6,6 @@ interface PieceProps {
 }
 
 export default function Piece({ type, color }: PieceProps) {
-    const fileName = `${color}_${type}.svg`;
-  return <Image src={`/pieces/${fileName}`} alt={type} className="piece"/>;
+  const fileName = `${color}_${type}.svg`;
+  return <img src={`/pieces/${fileName}`} alt={type} className="piece" />;
 }

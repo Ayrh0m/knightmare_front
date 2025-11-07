@@ -15,6 +15,7 @@ type GameContextType = {
   lastIndex: number;
   canPlay: boolean;
   checkmate: Color | null;
+  timeoutWinner: Color | null;
   makeMove: (
     from: Square,
     to: Square,
@@ -23,6 +24,7 @@ type GameContextType = {
   resetGame: () => void;
   goTo: (index: number) => boolean;
   isPromotionMove: (from: Square, to: Square, piece: PieceSymbol) => boolean;
+  declareTimeout: (color: Color) => void;
 };
 
 const GameContext = createContext<GameContextType | null>(null);
@@ -35,16 +37,21 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
   );
   const [fenHistory, setFenHistory] = useState<string[]>([game.fen()]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [checkmate, setCheckmate] = useState<Color | null>(game.isCheckmate() ? game.turn() : null)
+  const [checkmate, setCheckmate] = useState<Color | null>(game.isCheckmate() ? game.turn() : null);
+  const [timeoutWinner, setTimeoutWinner] = useState<Color | null>(null);
 
   const lastIndex = game.history().length;
-  const canPlay = currentIndex === lastIndex;
+  const canPlay = currentIndex === lastIndex && !checkmate && !timeoutWinner;
 
   function makeMove(
     from: Square,
     to: Square,
     promotion: PieceSymbol | undefined
   ) {
+    if (!canPlay) {
+      return null;
+    }
+    
     try {
       const move = game.move({ from, to, promotion });
 
@@ -69,6 +76,8 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     setHistory([]);
     setGame(newGame);
     setCurrentIndex(0);
+    setCheckmate(null);
+    setTimeoutWinner(null);
   }
 
   function goTo(index: number) {
@@ -85,6 +94,10 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
     return rank === "8" || rank === "1";
   }
 
+  function declareTimeout(color: Color) {
+    setTimeoutWinner(color);
+  }
+
   return (
     <GameContext.Provider
       value={{
@@ -96,10 +109,12 @@ export function GameProvider({ children }: { children: React.ReactNode }) {
         lastIndex,
         canPlay,
         checkmate,
+        timeoutWinner,
         makeMove,
         resetGame,
         goTo,
         isPromotionMove,
+        declareTimeout,
       }}
     >
       {children}

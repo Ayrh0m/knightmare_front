@@ -16,9 +16,9 @@ export default function ChessTimer({ initialValue, side }: ChessTimerProps) {
     if (turn !== side) return;
 
     const interval = setInterval(() => {
-      timeRef.current = Math.max(0, timeRef.current - 1000); // tick toutes les 100ms
-      forceRender((n) => n + 1); // juste pour l'affichage
-      if (timeRef.current === 0) clearInterval(interval); // timeout
+      timeRef.current = Math.max(0, timeRef.current - 1000);
+      forceRender((n) => n + 1);
+      if (timeRef.current === 0) clearInterval(interval);
     }, 1000);
 
     return () => clearInterval(interval);

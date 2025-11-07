@@ -15,11 +15,14 @@ export default function Home() {
         <Link href={"/play"} className="btn btn-primary">
           Jouer
         </Link>
+        <Link href={"/timer/setting"} className="btn btn-primary">
+          Jouer avec temps limité
+        </Link>
         <Link href={"/settings"} className="btn">
           Paramètres
         </Link>
       </div>
-      <Image src="/chess_fond.png" alt="" className={styles.chessImg} />
+      <Image src="/chess_fond.png" alt="" className={styles.chessImg} width={500} height={700}/>
     </main>
   );
 }
